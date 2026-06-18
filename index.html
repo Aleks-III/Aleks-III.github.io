@@ -82,10 +82,10 @@
                     <img src="assets/images/enhancement1_NavigationHelper.png" alt="Helper Class Refactoring">
                     <p><strong>Architectural Extraction</strong><br>Project package layout displaying modular utility helper files.</p>
                 </div>
-            </div>
-            <div class="image-card">
-                <img src="assets/images/enhancement1_SMSToggleHelper.png" alt="Helper Class Refactoring">
-                <p><strong>Architectural Extraction</strong><br>Project package layout displaying modular utility helper files.</p>
+                <div class="image-card">
+                    <img src="assets/images/enhancement1_SMSToggleHelper.png" alt="Helper Class Refactoring">
+                    <p><strong>Architectural Extraction</strong><br>Project package layout displaying modular utility helper files.</p>
+                </div>
             </div>
         </section>
 
@@ -100,6 +100,27 @@
                 <p>For the algorithms and data structures enhancement, I expanded the application beyond basic data entry by adding analytics features that process the user’s historical weight entries. Because weight history is naturally an ordered collection of data points, it provided a good opportunity to demonstrate algorithmic thinking through time-based calculations and careful handling of edge cases. Specifically, I implemented date-window calculations for 7-day and 30-day rolling averages, trend direction (gain/loss/flat), per-entry weight change (Δ), rate of change (computed as lbs/day and displayed as lbs/week), and an estimated time to reach the user’s goal (ETA in days) when enough data is available (see Figures 1-4). I also added consistent rounding and “no data” behavior (represented by an em dash) so the app does not present misleading results when history is limited or a metric cannot be computed responsibly.</p>
                 <p>This enhancement shows I can improve an existing codebase without disrupting the original functionality. The original history view primarily displayed entries, but the new analytics makes the stored data more useful by summarizing progress in a way that is consistent and interpretable. These improvements also connect with my interest in AI and data-driven development because they focus on extracting meaningful information from data, making defensible assumptions, and ensuring calculations behave reliably.</p>
             </div>
+
+            <h3>Visual Artifact Demonstrations</h3>
+            <div class="image-gallery">
+                <div class="image-card">
+                    <img src="assets/images/enhancement2_new_history_screen.png" alt="Bottom Navigation Interface">
+                    <p><strong>Weight History Analytics</strong><br>Placeholder</p>
+                </div>
+                <div class="image-card">
+                    <img src="assets/images/enhancement2_WeightAnalytics.analyze().png" alt="Helper Class Refactoring">
+                    <p><strong>WeightAnalytics.analyze()</strong><br>Placeholder</p>
+                </div>
+                <div class="image-card">
+                    <img src="assets/images/enhancement2_goal_ETA.png" alt="Helper Class Refactoring">
+                    <p><strong>estimateGoalEta()</strong><br>Placeholder</p>
+                </div>
+                <div class="image-card">
+                    <img src="assets/images/enhancement2_rollingAverage().png" alt="Helper Class Refactoring">
+                    <p><strong>rollingAverage()</strong><br>Placeholder</p>
+                </div>
+            </div>
+        </section>
         </section>
 
         <!-- 5. ARTIFACT 3: DATABASES -->
@@ -113,6 +134,23 @@
                 <p>For the database enhancement, I focused on both security and performance. I refactored my DatabaseHelper class to use parameterized queries throughout (Figure 1), eliminating the risk of SQL injection attacks and making the codebase more maintainable. I added strategic indexes on frequently queried columns (Figure 2) to optimize query performance for analytics calculations and login validation. I also implemented CHECK constraints at the database level (Figure 3) to enforce data integrity rules (valid weights, reasonable goals, proper date ordering), ensuring invalid data cannot enter the database regardless of application logic. These enhancements take the database design beyond simply storing data by actively protecting against both security threats and data corruption, while supporting efficient querying for features like analytics.</p>
                 <p>This combination of enhancements shows I can improve an existing codebase across multiple layers (application logic, data structures, and database design) without disrupting original functionality. These improvements connect with my interest in building systems that are secure, efficient, and defensible because they focus on extracting meaningful information from data, making careful assumptions, and ensuring calculations and queries behave reliably.</p>
             </div>
+
+            <h3>Visual Artifact Demonstrations</h3>
+            <div class="image-gallery">
+                <div class="image-card">
+                    <img src="assets/images/enhancement3_indexed_queries" alt="Bottom Navigation Interface">
+                    <p><strong>Indexed Queries</strong><br>Placeholder</p>
+                </div>
+                <div class="image-card">
+                    <img src="assets/images/enhancement3_parameterized_query.png" alt="Helper Class Refactoring">
+                    <p><strong>Parameterized Query</strong><br>Placeholder</p>
+                </div>
+                <div class="image-card">
+                    <img src="assets/images/enhancement3_CHECK_constraints.png" alt="Helper Class Refactoring">
+                    <p><strong>CHECK Constraints</strong><br>Placeholder</p>
+                </div>
+            </div>
+        </section>
         </section>
 
     </div>
