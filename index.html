@@ -33,46 +33,57 @@
             .btn-container { margin: 20px 0; padding-top: 15px; border-top: 1px dashed #e2e8f0; }
             
             /* =====================================================
-               UNIVERSAL MOBILE ENGINE (Covers Portrait & Landscape)
+               UNIVERSAL MOBILE ENGINE (Polished Mobile Viewports)
                ===================================================== */
             @media (max-width: 930px) {
-                /* 1. GLOBALLY STRETCH THE CONTAINERS WIDER TO FIX SQUISHING */
-                .container { max-width: 96%; margin: 10px auto; padding: 0 5px; }
-                section { padding: 15px; margin-bottom: 15px; }
+                /* Fixes the text squishing by adding clean breathing room */
+                .container { max-width: 92%; margin: 10px auto; padding: 0; }
+                section { padding: 20px 15px; margin-bottom: 20px; }
                 .narrative-box { padding: 15px; margin-bottom: 15px; }
     
-                /* 2. UNIFY ALL FONT SIZES EQUALLY ACROSS EVERY CONTAINER */
+                /* Unifies paragraph, card, and list text cleanly */
                 body, p, ul, li, .narrative-box p, .image-card p { 
-                    font-size: 13px !important; 
-                    line-height: 1.4 !important; 
+                    font-size: 14px !important; 
+                    line-height: 1.5 !important; 
                 }
     
-                /* 3. SCALED DOWN HEADERS TO MATCH NEW COMPACT TEXT */
+                /* Scales down headers so they don't look awkward */
                 header { padding: 25px 10px; }
                 header h1 { font-size: 1.6em; }
-                header p { font-size: 0.9em; }
+                header p { font-size: 0.95em; }
                 h2 { font-size: 1.3em; margin-bottom: 8px; }
                 h3 { font-size: 1.1em; margin-top: 15px; }
     
-                /* 4. COMPACT MOBILE STICKY NAV MENU */
-                nav { padding: 8px 5px; }
-                nav a { margin: 0 4px; font-size: 0.78em; display: inline-block; }
+                /* FIXES TINY BUTTONS: Enlarges tap targets for navigation menu links */
+                nav { padding: 12px 5px; }
+                nav a { margin: 0 6px; font-size: 14px !important; display: inline-block; padding: 6px 4px; }
     
-                /* 5. INDEPENDENT MOBILE SCROLL FOR WIDE CODE BLOCKS */
-                pre { padding: 12px; font-size: 11px !important; width: auto; overflow-x: auto; white-space: pre; }
+                /* FIXES CODE TEXT: Independent mobile scroll for wide code blocks */
+                pre, pre code { font-size: 11px !important; }
+                pre { padding: 12px; width: auto; overflow-x: auto; white-space: pre; }
                 code { word-break: normal; }
     
-                /* 6. VERTICAL STACKING FOR THE SCREENSHOT CARDS */
-                .image-gallery { gap: 15px; }
-                .image-card { min-width: 100%; padding: 12px; }
+                /* FIXES PORTRAIT PICTURES: Centers and scales images inside the portrait grid */
+                .image-gallery { gap: 15px; justify-content: center; }
+                .image-card { flex: 0 1 90%; max-width: 320px; padding: 12px; margin: 0 auto; }
+                .image-card img { max-height: 380px; width: auto; }
             }
     
             /* SPECIFIC COMFORT TWEAKS FOR LANDSCAPE ROTATION ONLY */
             @media (max-width: 930px) and (orientation: landscape) {
-                nav { position: static; padding: 6px; } /* Unpins menu from taking screen space */
+                nav { position: static; padding: 8px; } 
                 header { padding: 15px 10px; }
-                body, p, ul, li, .narrative-box p, .image-card p { font-size: 10px !important; } /* Extra layout boost for short viewports */
-                pre { font-size: 11px !important; }
+                
+                /* Keeps layout fonts from inflating on wide viewports */
+                body, p, ul, li, .narrative-box p, .image-card p, nav a { font-size: 13px !important; } 
+                pre, pre code { font-size: 11px !important; }
+    
+                /* FIXES VIDEO EXCESIVE HEIGHT: Keeps the YouTube embed manageable on short screens */
+                .video-container { max-width: 60%; margin: 15px auto; padding-bottom: 33.75%; }
+    
+                /* FIXES LANDSCAPE PICTURES: Restores side-by-side viewports for short screens */
+                .image-card { flex: 1 1 45%; max-width: 260px; margin: 0; }
+                .image-card img { max-height: 220px; width: auto; }
             }
         </style>
 </head>
