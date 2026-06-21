@@ -54,19 +54,19 @@
         <!-- PROFESSIONAL SELF-ASSESSMENT -->
         <section id="assessment">
             <h2>Professional Self-Assessment</h2>
-            <div class="narrative-box" style="border-left-color: #28a745; background-color: #fafdfb;">
+            <div class="narrative-box" style="border-left-color: #48bb78; background-color: #fafdfb;">
                 
                 <h3>Introduction & Career Alignment</h3>
-                <p><strong>Hello, I'm Aleks.</strong> Welcome to my professional computer science ePortfolio. As a graduate of the SNHU Computer Science program, my career goal is to develop software systems that streamline workflows in ethical, human-centered ways. I am deeply interested in building tools that augment human work, catch systemic errors, and improve code quality while keeping users in control of critical decisions. This portfolio showcases my ability to take a functional mobile application and systematically refactor it to meet modern enterprise standards for architecture, algorithmic defense, and database security.</p>
+                <p><strong>Hello, I'm Aleks.</strong> Welcome to my professional computer science ePortfolio. As a graduate of the SNHU Computer Science program, my career goal is to develop software systems that streamline workflows in ethical, human-centered ways. I am deeply interested in building tools that augment human work, catch systemic errors, and improve code quality while keeping users in control of critical decisions. This ePortfolio showcases my ability to take a functional mobile application and systematically refactor it to meet modern enterprise standards for architecture, algorithmic defense, and database security.</p>
             
                 <h3>The Refactoring Process & Project Management</h3>
                 <p>My capstone focus centers on my mobile application, Weight Tracker, originally designed in Java using Android Studio in December 2025. Revisiting this codebase provided a valuable lesson in software lifecycle management. I learned the critical importance of making disciplined, incremental improvements to an existing application rather than trying to overhaul too many components simultaneously. Approaching a legacy codebase with fresh eyes allowed me to be critically objective about my past work, helping me identify core opportunities to optimize user experience and code maintainability without disrupting foundational features.</p>
             
                 <h3>Demonstrated Technical Competencies</h3>
                 <ul>
-                    <li><strong>Software Engineering & Design:</strong> I demonstrated advanced structural design by extracting duplicated, scattered logic into centralized, reusable navigation and SMS helper classes. This eliminated redundant syntax, established UI consistency across screens via a global bottom navigation bar, and proved my ability to scale an application smoothly.</li>
-                    <li><strong>Algorithmic Defense & Performance:</strong> My algorithmic updates reinforced that software logic is not just about writing a correct formula. It requires defining strict business logic rules and handling edge cases defensively. By implementing analytics modules that require baseline data coverage and restrict calculations based on user trends, I ensured the application delivers defensible, reliable outputs to consumers.</li>
-                    <li><strong>Multi-Layer Data Security:</strong> To showcase a mature security mindset, I refactored the application's data tier. Relying solely on application-layer input validation exposes systems to corruption if bugs occur. By introducing parameterized queries to completely block SQL injection vulnerabilities, alongside strategic database-level CHECK constraints, I established a resilient, multi-layered data protection architecture that ensures long-term data privacy and integrity.</li>
+                    <li><strong>Software Engineering & Design:</strong> I demonstrated advanced structural design by extracting duplicated, scattered logic into centralized, reusable navigation and SMS helper classes. This eliminated redundant syntax, established UI consistency across screens via a global bottom navigation bar, and proved my ability to scale an application smoothly using modern software engineering tools.</li>
+                    <li><strong>Algorithms & Data Structures:</strong> My algorithmic updates reinforced that software logic is not just about writing a correct formula. It requires defining strict business logic rules and handling edge cases defensively to navigate design trade-offs. By implementing analytics modules that require baseline data coverage and restrict calculations based on user trends, I ensured the application delivers defensible, reliable outputs to consumers.</li>
+                    <li><strong>Database Integration & Security:</strong> To showcase a mature security mindset, I refactored the application's data tier. Relying solely on application-layer input validation exposes systems to corruption if bugs occur. By introducing parameterized queries to completely block SQL injection vulnerabilities, alongside strategic database-level CHECK constraints, I established a resilient, multi-layered data protection architecture that ensures long-term data privacy and integrity.</li>
                 </ul>
             
                 <h3>Conclusion</h3>
@@ -131,7 +131,7 @@
             <h3>Core Code Implementation: Architectural Extraction</h3>
             <p>This code block illustrates the refactored, shared utility model. By centralizing the screen transition logic inside a single, final utility wrapper, individual activity modules are completely decoupled from redundant setup blocks.</p>
 
-            <!-- ENHANCEMENT SOURCE -->
+            <!-- ENHANCEMENT SOURCE (SOFTWARE DESIGN) -->
             <div class="btn-container">
                 <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/NavigationHelper.java" target="_blank" class="btn-new">View Full NavigationHelper.java Source</a>
             </div>
@@ -202,6 +202,8 @@
             
             <h3>Narrative</h3>
             <div class="narrative-box">
+                <p><em><strong>Project Baseline:</strong> This enhancement modifies my weight tracking mobile application, Weight Tracker, originally developed in Java using Android Studio in December 2025. Built as a foundational tool to log body weight values, track goal parameters, and review chronological history metrics, the application serves as the singular architecture for all capstone system optimizations.</em></p>
+                
                 <p>To expand the application beyond basic data entry, I engineered an analytics layer that processes ordered time-series collections of historical weight data. This framework leverages date-window calculations to compute 7-day and 30-day rolling averages, tracking dynamic metrics such as trend direction, per-entry variance (Δ), and rates of change displayed as weekly velocity. When sufficient data thresholds are achieved, the algorithm predicts a projected date window to estimate the user's targeted goal arrival (ETA in days).</p>
                 <p>A primary challenge of this implementation was maintaining system integrity by integrating strict edge-case defenses. I implemented explicit data-validation rules and "no data" fallback constraints (represented visually by an em dash) to prevent the algorithm from producing misleading calculations when historical data coverage is restricted. This optimization balances data utility with algorithmic reliability, transforming raw data structures into highly interpretable user summaries without degrading local mobile processing performance.</p>
                 <p>These enhancements reflect a strong alignment with data-driven software development by demonstrating how to extract meaningful insights from raw datasets. By establishing clear computational assumptions and defensive filtering boundaries, the system ensures that mathematical processing remain stable, secure, and defensible across varying user entry volumes.</p>
@@ -210,9 +212,9 @@
             <h3>Core Code Implementation: Algorithmic Logic & Edge-Case Defense</h3>
             <p>This snippet displays the foundational loop logic and boundary evaluations used to parse data collections. By isolating chronological entries and verifying distinct calendar days, the processing algorithm ensures that all calculations are derived from valid, consistent milestones.</p>
 
-            <!-- ENHANCEMENT SOURCE -->
+            <!-- ENHANCEMENT SOURCE (ALGORITHMS) -->
             <div class="btn-container">
-                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/WeightAnalytics.java" target="_blank" class="btn-new">View Full Enhanced WeightAnalytics.java</a>
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/WeightAnalytics.java" target="_blank" class="btn-new">View Full Enhanced WeightAnalytics.java Source</a>
             </div>
             
             <pre><code>
@@ -319,9 +321,9 @@
             <h3>Core Code Implementation: Secure Parameterized Queries</h3>
             <p>This implementation displays the secure parameterized data helper wrapper models. By routing transactions through Android's structured query engine, data parameters are forced into type-safe argument fields, while Java try-with-resources statement streams ensure that cursor streams close automatically to preserve system memory.</p>
 
-            <!-- ENHANCEMENT SOURCE -->
+            <!-- ENHANCEMENT SOURCE (DATABASES) -->
             <div class="btn-container">
-                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/DatabaseHelper.java" target="_blank" class="btn-new">View Full Enhanced DatabaseHelper.java</a>
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/DatabaseHelper.java" target="_blank" class="btn-new">View Full Enhanced DatabaseHelper.java Source</a>
             </div>
             
             <pre><code>
