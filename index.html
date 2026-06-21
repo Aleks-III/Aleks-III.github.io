@@ -33,49 +33,49 @@
             .btn-container { margin: 20px 0; padding-top: 15px; border-top: 1px dashed #e2e8f0; }
             
             /* =====================================================
-               UNIVERSAL MOBILE ENGINE (Polished Mobile Viewports)
+               UNIVERSAL MOBILE ENGINE
                ===================================================== */
             @media (max-width: 930px) {
-                /* Fixes the text squishing by adding clean breathing room */
+                /* Gives text breathing room */
                 .container { max-width: 92%; margin: 10px auto; padding: 0; }
                 section { padding: 20px 15px; margin-bottom: 20px; }
                 .narrative-box { padding: 15px; margin-bottom: 15px; }
     
-                /* Unifies paragraph, card, and list text cleanly */
+                /* Unifies paragraph, card, and list text */
                 body, p, ul, li, .narrative-box p, .image-card p, .outcome-tag { 
                     font-size: 14px !important; 
                     line-height: 1.5 !important; 
                 }
     
-                /* Scales down headers so they don't look awkward */
+                /* Scales down headers */
                 header { padding: 25px 10px; }
                 header h1 { font-size: 1.6em; }
                 header p { font-size: 0.95em; }
                 h2 { font-size: 1.3em; margin-bottom: 8px; }
                 h3 { font-size: 1.1em; margin-top: 15px; }
     
-                /* FIXES TINY BUTTONS: Enlarges tap targets for navigation menu links */
+                /* Tap target size for navigation menu links */
                 nav { padding: 12px 5px; }
                 nav a { margin: 0 6px; font-size: 12px !important; display: inline-block; padding: 6px 4px; }
     
-                /* FIXES CODE TEXT: Independent mobile scroll for wide code blocks */
+                /* Independent mobile scroll for wide code blocks */
                 pre, pre code { font-size: 11px !important; }
                 pre { padding: 12px; width: auto; overflow-x: auto; white-space: pre; }
                 code { word-break: normal; }
     
-                /* FIXES PORTRAIT PICTURES: Centers and scales images inside the portrait grid */
+                /* Centers and scales images inside the grid */
                 .image-gallery { gap: 15px; justify-content: center; }
                 .image-card { flex: 0 1 90%; max-width: 320px; padding: 12px; margin: 0 auto; }
                 .image-card img { max-height: 600px; width: auto; }
             }
     
-            /* SPECIFIC COMFORT TWEAKS FOR LANDSCAPE ROTATION ONLY */
+            /* SPECIFIC TWEAKS FOR LANDSCAPE ROTATION ONLY */
             @media (max-width: 930px) and (orientation: landscape) {
                 header { padding: 15px 10px; }
-                
+                nav { padding: 6px; }
                 
                 /* Keeps layout fonts from inflating on wide viewports */
-                body, p, ul, li, .narrative-box p, .image-card p { font-size: 14px !important; } 
+                /*body, p, ul, li, .narrative-box p, .image-card p { font-size: 14px !important; } 
                 pre, pre code { font-size: 12px !important; }
     
                 /* FIXES VIDEO EXCESIVE HEIGHT: Keeps the YouTube embed manageable on short screens */
