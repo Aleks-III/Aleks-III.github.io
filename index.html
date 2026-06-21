@@ -121,13 +121,63 @@
                 <a href="https://github.com" target="_blank" style="background:#28a745; color:white; padding:10px 15px; text-decoration:none; border-radius:4px; display:inline-block; font-weight:bold; font-size:14px;">View Enhanced 2026 Code</a>
             </div>
 
-            <h3>Core Code Implementation: Reusable Helper Class</h3>
-            <pre><code>// Visually represents how logic was extracted into a shared utility
-            public class NavigationHelper {
-                public static void setupBottomNavigation(BottomNavigationView navView, final Context context) {
-                    navView.setOnItemSelectedListener(item -> {
-                        // Shared navigation logic used by Daily, Goal, and History screens
-                        return true;
+            <h3>Core Code Implementation: Architectural Extraction</h3>
+            <p>To demonstrate industry-standard software engineering practices, I refactored the application's structural layer. By moving the navigation logic into a centralized utility class, I eliminated duplicate code and ensured a uniform user experience across all primary tabs.</p>
+            
+            <pre><code>/**
+             * Shared bottom navigation setup for the three main screens.
+             * &lt;p&gt;
+             * Centralizing this logic reduces duplication and keeps navigation
+             * behavior consistent across the app.
+             */
+            public final class NavigationHelper {
+            
+                private NavigationHelper() {
+                    // Utility class
+                }
+            
+                /**
+                 * Configures the bottom navigation bar for the current screen.
+                 *
+                 * @param activity        current activity
+                 * @param bottomNav       bottom navigation view
+                 * @param selectedItemId  menu item that should appear selected
+                 * @param userId          active user ID to pass between screens
+                 */
+                public static void setupBottomNav(Activity activity,
+                                                  BottomNavigationView bottomNav,
+                                                  int selectedItemId,
+                                                  int userId) {
+                    bottomNav.setSelectedItemId(selectedItemId);
+            
+                    bottomNav.setOnItemSelectedListener(item -&gt; {
+                        int itemId = item.getItemId();
+            
+                        // Keep the current tab selected without reloading the same screen.
+                        if (itemId == selectedItemId) {
+                            return true;
+                        }
+            
+                        Intent intent = null;
+            
+                        if (itemId == R.id.nav_new_entry) {
+                            intent = new Intent(activity, DailyWeightActivity.class);
+                        } else if (itemId == R.id.nav_history) {
+                            intent = new Intent(activity, HistoryActivity.class);
+                        } else if (itemId == R.id.nav_goal) {
+                            intent = new Intent(activity, GoalWeightActivity.class);
+                        }
+            
+                        if (intent != null) {
+                            intent.putExtra("USER_ID", userId);
+                            activity.startActivity(intent);
+                            activity.overridePendingTransition(0, 0);
+                            activity.finish();
+                            activity.overridePendingTransition(0, 0);
+                            return true;
+                        }
+            
+                        return false;
                     });
                 }
             }</code></pre>
@@ -145,15 +195,94 @@
                 <p>This enhancement shows I can improve an existing codebase without disrupting the original functionality. The original history view primarily displayed entries, but the new analytics makes the stored data more useful by summarizing progress in a way that is consistent and interpretable. These improvements also connect with my interest in AI and data-driven development because they focus on extracting meaningful information from data, making defensible assumptions, and ensuring calculations behave reliably.</p>
             </div>
 
-            <h3>Core Code Implementation: Algorithmic Logic</h3>
-            <pre><code>// Visually represents defensive programming and edge-case handling
-            public double calculateWeightTrend(List&lt;WeightEntry&gt; entries) {
-                // Rubric requirement: handle assumptions and protect logic data
-                if (entries == null || entries.size() &lt; 7) {
-                    return 0.0; // Requires at least 7 days of data coverage
+            <h3>Core Code Implementation: Algorithmic Logic & Edge-Case Defense</h3>
+            <p>To demonstrate advanced algorithmic thinking, I designed defensive logic checks into the application data analytics layer. This snippet showcases loop systems that actively look for distinct calendar days and filter data boundaries. This ensures that rate-of-change and progress trends are calculated using valid, consistent date milestones.</p>
+            
+            <pre><code>// =====================================================
+                // Trend & rate-of-change
+                // =====================================================
+            
+                private static TrendType trendType(Double lbsPerDay) {
+                    if (lbsPerDay == null) return TrendType.INSUFFICIENT;
+                    if (Math.abs(lbsPerDay) &lt; FLAT_EPSILON_LBS_PER_DAY) return TrendType.FLAT;
+                    return lbsPerDay &lt; 0 ? TrendType.LOSS : TrendType.GAIN;
                 }
-                // Trend computation logic continues below...
-            }</code></pre>
+            
+                private static final class RateInfo {
+                    final double lbsPerDay;
+            
+                    RateInfo(double lbsPerDay) {
+                        this.lbsPerDay = lbsPerDay;
+                    }
+                }
+            
+                /**
+                 * Computes slope using the most recent entry and the most recent earlier distinct day.
+                 */
+                private static RateInfo rateOfChange(List&lt;DatedWeight&gt; sortedByDateAsc) {
+                    if (sortedByDateAsc.size() &lt; 2) return null;
+            
+                    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
+            
+                    // Find the most recent entry that occurred on an earlier day than the last entry.
+                    DatedWeight prevDistinctDay = null;
+                    for (int i = sortedByDateAsc.size() - 2; i &gt;= 0; i--) {
+                        DatedWeight candidate = sortedByDateAsc.get(i);
+                        if (candidate.epochDay &lt; last.epochDay) {
+                            prevDistinctDay = candidate;
+                            break;
+                        }
+                    }
+            
+                    if (prevDistinctDay == null) {
+                        // All entries are on the same day -&gt; can't compute lbs/day
+                        return null;
+                    }
+            
+                    long days = last.epochDay - prevDistinctDay.epochDay;
+                    double delta = last.weight - prevDistinctDay.weight;
+            
+                    return new RateInfo(delta / (double) days);
+                }
+            
+                /** Computes lbs/day slope using entries within the last 7 days (by date window). */
+                private static RateInfo rateOfChangeInLast7Days(List&lt;DatedWeight&gt; sortedByDateAsc) {
+                    final int daysWindow = 7;
+            
+                    if (sortedByDateAsc.size() &lt; 2) return null;
+            
+                    long lastDay = sortedByDateAsc.get(sortedByDateAsc.size() - 1).epochDay;
+                    long cutoff = lastDay - (daysWindow - 1);
+            
+                    // Find first entry within the window
+                    int startIdx = -1;
+                    for (int i = 0; i &lt; sortedByDateAsc.size(); i++) {
+                        if (sortedByDateAsc.get(i).epochDay &gt;= cutoff) {
+                            startIdx = i;
+                            break;
+                        }
+                    }
+                    if (startIdx == -1) return null;
+            
+                    // Use the latest entry as the end, and find an earlier distinct day within window
+                    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
+            
+                    DatedWeight firstDistinct = null;
+                    for (int i = startIdx; i &lt; sortedByDateAsc.size(); i++) {
+                        DatedWeight candidate = sortedByDateAsc.get(i);
+                        if (candidate.epochDay &lt; last.epochDay) {
+                            firstDistinct = candidate;
+                            break;
+                        }
+                    }
+                    if (firstDistinct == null) return null;
+            
+                    long days = last.epochDay - firstDistinct.epochDay;
+                    if (days &lt;= 0) return null;
+            
+                    double delta = last.weight - firstDistinct.weight;
+                    return new RateInfo(delta / (double) days);
+                }</code></pre>
         </section>
 
         <!-- 5. ENHANCEMENT 3: DATABASES -->
@@ -168,17 +297,99 @@
                 <p>This combination of enhancements shows I can improve an existing codebase across multiple layers (application logic, data structures, and database design) without disrupting original functionality. These improvements connect with my interest in building systems that are secure, efficient, and defensible because they focus on extracting meaningful information from data, making careful assumptions, and ensuring calculations and queries behave reliably.</p>
             </div>
 
-            <h3>Core Code Implementation: Secure SQLite Operation</h3>
-            <pre><code>// Visually represents a security mindset using parameterized queries
-            public boolean insertSecureWeight(String userId, double weight, String date) {
-                SQLiteDatabase db = this.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put("user_id", userId); // Secure parameter binding
-                values.put("weight_value", weight);
-                values.put("entry_date", date);
-                long result = db.insert("weight_history", null, values);
-                return result != -1;
-            }</code></pre>
+            <h3>Core Code Implementation: Secure Parameterized Queries</h3>
+            <p>To demonstrate a mature data security mindset, I refactored the data tier to completely prevent SQL injection exploits. These centralized query helpers isolate data access using Android's native structured query engine, enforcing type-safe parameterized arguments while safely managing database cursor streams to prevent memory leaks.</p>
+            
+            <pre><code>// =====================================================
+                // Helper methods for consistent query execution
+                // =====================================================
+            
+                /**
+                 * Executes a SELECT query and returns a single Long value.
+                 * Closes the cursor automatically.
+                 *
+                 * @param table      the table name
+                 * @param column     the column to select
+                 * @param whereClause the WHERE clause (without "WHERE")
+                 * @param whereArgs  the query arguments
+                 * @return the value, or -1 if not found
+                 */
+                private long queryForLong(String table, String column, String whereClause, String[] whereArgs) {
+                    SQLiteDatabase db = this.getReadableDatabase();
+            
+                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+                            null, null, null)) {
+                        if (cursor.moveToFirst()) {
+                            return cursor.getLong(0);
+                        }
+                    }
+            
+                    return -1;
+                }
+            
+                /**
+                 * Executes a SELECT query and returns a single Double value.
+                 * Closes the cursor automatically.
+                 *
+                 * @param table      the table name
+                 * @param column     the column to select
+                 * @param whereClause the WHERE clause (without "WHERE")
+                 * @param whereArgs  the query arguments
+                 * @return the value, or null if not found
+                 */
+                private Double queryForDouble(String table, String column, String whereClause, String[] whereArgs) {
+                    SQLiteDatabase db = this.getReadableDatabase();
+            
+                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+                            null, null, null)) {
+                        if (cursor.moveToFirst()) {
+                            return cursor.getDouble(0);
+                        }
+                    }
+            
+                    return null;
+                }
+            
+                /**
+                 * Executes a SELECT query and returns a single String value.
+                 * Closes the cursor automatically.
+                 *
+                 * @param table      the table name
+                 * @param column     the column to select
+                 * @param whereClause the WHERE clause (without "WHERE")
+                 * @param whereArgs  the query arguments
+                 * @return the value, or null if not found
+                 */
+                private String queryForString(String table, String column, String whereClause, String[] whereArgs) {
+                    SQLiteDatabase db = this.getReadableDatabase();
+            
+                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+                            null, null, null)) {
+                        if (cursor.moveToFirst()) {
+                            return cursor.getString(0);
+                        }
+                    }
+            
+                    return null;
+                }
+            
+                /**
+                 * Executes a SELECT query and returns whether a record exists.
+                 * Closes the cursor automatically.
+                 *
+                 * @param table      the table name
+                 * @param whereClause the WHERE clause (without "WHERE")
+                 * @param whereArgs  the query arguments
+                 * @return true if at least one record matches, false otherwise
+                 */
+                private boolean recordExists(String table, String whereClause, String[] whereArgs) {
+                    SQLiteDatabase db = this.getReadableDatabase();
+            
+                    try (Cursor cursor = db.query(table, new String[]{"1"}, whereClause, whereArgs,
+                            null, null, null)) {
+                        return cursor.getCount() > 0;
+                    }
+                }</code></pre>
         </section>
     </div>
 </body>
