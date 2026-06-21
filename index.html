@@ -73,15 +73,11 @@
             @media (max-width: 930px) and (orientation: landscape) {
                 header { padding: 15px 10px; }
                 nav { padding: 6px; }
-                
-                /* Keeps layout fonts from inflating on wide viewports */
-                /*body, p, ul, li, .narrative-box p, .image-card p { font-size: 14px !important; } 
-                pre, pre code { font-size: 12px !important; }
     
-                /* FIXES VIDEO EXCESIVE HEIGHT: Keeps the YouTube embed manageable on short screens */
+                /* Keeps the YouTube embed size reasonable on short screens */
                 .video-container { max-width: 60%; margin: 15px auto; padding-bottom: 33.75%; }
     
-                /* FIXES LANDSCAPE PICTURES: Restores side-by-side viewports for short screens */
+                /* Maintains side-by-side viewports for short screens */
                 .image-card { flex: 1 1 45%; max-width: 260px; margin: 0; }
                 .image-card img { max-height: 350px; width: auto; }
             }
@@ -162,10 +158,10 @@
                 </div>
             </div>
 
-            <!-- COMPARISON BUTTONS LINKING TO YOUR CODE REPOS -->
-            <div class="btn-container" style="text-align: center;">
-                <a href="https://github.com/Aleks-III/CS-360-Mobile-Architecture-and-Programming" target="_blank" class="btn-old">Browse Original 2025 Repository Archive</a>
-                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone" target="_blank" class="btn-new">Browse Enhanced Capstone Repository</a>
+            <!-- LINKS TO CODE REPOS -->
+            <div class="btn-container" style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; text-align: center; max-width: 800px; margin: 25px auto 0 auto;">
+                <a href="https://github.com/Aleks-III/CS-360-Mobile-Architecture-and-Programming" target="_blank" class="btn-old" style="margin: 0; min-width: 250px;">Browse Original 2025 Repository Archive</a>
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone" target="_blank" class="btn-new" style="margin: 0; min-width: 250px;">Browse Enhanced Capstone Repository</a>
             </div>
         </section>
 
