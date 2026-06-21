@@ -31,50 +31,48 @@
             .btn-new { background: #38a169; color: white; padding: 10px 18px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: 600; font-size: 13px; transition: background 0.2s; }
             .btn-new:hover { background: #2f855a; }
             .btn-container { margin: 20px 0; padding-top: 15px; border-top: 1px dashed #e2e8f0; }
-            /*  =====================================================
-                RESPONSIVE MOBILE STYLES (Fixes iPhone Squishing & Menu)
-                ===================================================== */
-            @media (max-width: 768px) {
-                header { padding: 30px 15px; }
-                header h1 { font-size: 1.8em; }
-                header p { font-size: 0.95em; }
+            
+            /* =====================================================
+               UNIVERSAL MOBILE ENGINE (Covers Portrait & Landscape)
+               ===================================================== */
+            @media (max-width: 930px) {
+                /* 1. GLOBALLY STRETCH THE CONTAINERS WIDER TO FIX SQUISHING */
+                .container { max-width: 96%; margin: 10px auto; padding: 0 5px; }
+                section { padding: 15px; margin-bottom: 15px; }
+                .narrative-box { padding: 15px; margin-bottom: 15px; }
     
-                /* Shrinks container margins so text isn't squished in the middle */
-                .container { max-width: 95%; margin: 10px auto; padding: 0 5px; }
-                section { padding: 12px; margin-bottom: 12px; }
+                /* 2. UNIFY ALL FONT SIZES EQUALLY ACROSS EVERY CONTAINER */
+                body, p, ul, li, .narrative-box p, .image-card p { 
+                    font-size: 13px !important; 
+                    line-height: 1.4 !important; 
+                }
     
-                /* Fixes the landscape menu from stealing half the screen view */
-                nav { padding: 8px 5px; position: relative; }
-                nav a { margin: 0 5px; font-size: 0.8em; display: inline-block; padding: 5px 0; }
+                /* 3. SCALED DOWN HEADERS TO MATCH NEW COMPACT TEXT */
+                header { padding: 25px 10px; }
+                header h1 { font-size: 1.6em; }
+                header p { font-size: 0.9em; }
+                h2 { font-size: 1.3em; margin-bottom: 8px; }
+                h3 { font-size: 1.1em; margin-top: 15px; }
     
-                /* Handles wide code frame scrolls cleanly on small touch panels */
-                pre { padding: 12px; font-size: 12px; width: auto; overflow-x: auto; white-space: pre; }
+                /* 4. COMPACT MOBILE STICKY NAV MENU */
+                nav { padding: 8px 5px; }
+                nav a { margin: 0 4px; font-size: 0.78em; display: inline-block; }
+    
+                /* 5. INDEPENDENT MOBILE SCROLL FOR WIDE CODE BLOCKS */
+                pre { padding: 12px; font-size: 11px !important; width: auto; overflow-x: auto; white-space: pre; }
                 code { word-break: normal; }
     
-                /* Stack image galleries vertically with proper bottom room */
+                /* 6. VERTICAL STACKING FOR THE SCREENSHOT CARDS */
                 .image-gallery { gap: 15px; }
                 .image-card { min-width: 100%; padding: 12px; }
             }
     
-            /* Specifically fixes layout spacing and text sizes when rotating into landscape mode */
+            /* SPECIFIC COMFORT TWEAKS FOR LANDSCAPE ROTATION ONLY */
             @media (max-width: 930px) and (orientation: landscape) {
-                nav { position: static; padding: 6px; } 
+                nav { position: static; padding: 6px; } /* Unpins menu from taking screen space */
                 header { padding: 15px 10px; }
-                header h1 { font-size: 1.5em; }
-                
-                /* Optimizes font size and line height for short, wide screens */
-                body { font-size: 11px; line-height: 1.4; }
-                h2 { font-size: 1.4em; margin-bottom: 8px; }
-                h3 { font-size: 1.1em; margin-top: 15px; }
-                
-                /* 1. STRETCHES THE MAIN PAGE CONTAINER WIDER */
-                .container { max-width: 95%; margin: 10px auto; padding: 0 5px; }
-
-                /* 2. CONDENSES OUTER CARDS TO FREE UP SCREEN ROOM */
-                section { padding: 12px; margin-bottom: 12px; }
-    
-                /* 3. CONDENSES THE NARRATIVE BOXES TO EXPAND TEXT SPACE */
-                .narrative-box { padding: 12px; margin-bottom: 12px; font-size: 11px; }
+                body, p, ul, li, .narrative-box p, .image-card p { font-size: 12px !important; } /* Extra layout boost for short viewports */
+                pre { font-size: 11px !important; }
             }
         </style>
 </head>
