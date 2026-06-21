@@ -117,17 +117,19 @@
         <!-- ENHANCEMENT 1: SOFTWARE DESIGN AND ENGINEERING -->
         <section id="enhancement1">
             <h2>Enhancement 1: Software Design & Engineering</h2>
-            <span class="outcome-tag">Course Outcome: Design and Evaluate Computing Solutions</span>
+            <span class="outcome-tag">Course Outcome: Innovative Techniques, Skills, and Tools</span>
             
-            <h3>Narrative</h3>
+           <h3>Narrative</h3>
             <div class="narrative-box">
-                <!-- NARRATIVE -->
-                <p>Implementing the software engineering enhancements improved the application by extracting repeated logic into shared helper classes, which made the code cleaner, easier to maintain, and more consistent across screens. Specifically, I created reusable navigation and SMS toggle helpers so the Daily, Goal, and History screens could share the same behavior without duplicating code. These changes demonstrate growth in my software development practices because they reflect a more maintainable and scalable design approach.</p>
-                <p>This was also a good opportunity to show I can improve an existing codebase without disrupting the original functionality. For example, navigation and toggle logic were originally limited to specific screens, but I refactored that behavior into helper classes and made it accessible from all relevant screens through a bottom navigation bar. This made the app more convenient for the user while also reducing duplication and making the code easier to understand. It required careful attention to shared state, such as the user ID and SMS preferences. In addition, the SMS notification flow now provides better communication when a goal is reached by prompting the user to decide whether they would like to set a new goal right away.</p>
+                <p><em><strong>Project Baseline:</strong> This enhancement modifies my weight tracking mobile application, Weight Tracker, originally developed in Java using Android Studio in December 2025. Built as a foundational tool to log body weight values, track goal parameters, and review chronological history metrics, the application serves as the singular architecture for all capstone system optimizations.</em></p>
+
+                <p>To optimize the application's foundational framework, I refactored the structural layer by isolating and extracting repeated UI logic into centralized, reusable helper classes. In the original 2025 baseline, critical navigation patterns and system event tracking were duplicated across multiple files. By introducing modular utility helpers, I unified behaviors across the Daily, Goal, and History activity lifecycles. This architectural approach directly supports scalable development practices, rendering the code cleaner, easier to audit, and highly maintainable.</p>
+                <p>This refactoring process provided an excellent opportunity to demonstrate how to safely improve an existing enterprise codebase without disrupting original, core functionality. I transitioned isolated, screen-specific navigation models into a global bottom navigation bar accessible from all major endpoints. Managing this structural change required careful handling of asynchronous application states, ensuring that passing the unique user ID and SMS user preferences remained safe and consistent across transitions.</p>
+                <p>Additionally, I leveraged this structural overhaul to polish the functional user experience. I updated the SMS notification system workflow to trigger responsive user prompts the exact moment a target goal is achieved. This conversational flow communicates progress clearly, asking the user if they wish to set a new goal weight immediately. This final layer adds distinct product value while minimizing system text overhead.</p>
             </div>
-            
+
             <h3>Core Code Implementation: Architectural Extraction</h3>
-            <p>To demonstrate industry-standard software engineering practices, I refactored the application's structural layer. By moving the navigation logic into a centralized utility class, I eliminated duplicate code and ensured a uniform user experience across all primary tabs.</p>
+            <p>This code block illustrates the refactored, shared utility model. By centralizing the screen transition logic inside a single, final utility wrapper, individual activity modules are completely decoupled from redundant setup blocks.</p>
 
             <!-- ENHANCEMENT SOURCE -->
             <div class="btn-container">
@@ -196,17 +198,17 @@
         <!-- ENHANCEMENT 2: ALGORITHMS AND DATA STRUCTURES -->
         <section id="enhancement2">
             <h2>Enhancement 2: Algorithms & Data Structures</h2>
-            <span class="outcome-tag">Course Outcome: Algorithmic Principles & Practices</span>
+            <span class="outcome-tag">Course Outcome: Algorithmic Principles and Solution Trade-offs</span>
             
             <h3>Narrative</h3>
             <div class="narrative-box">
-                <!-- NARRATIVE -->
-                <p>For the algorithms and data structures enhancement, I expanded the application beyond basic data entry by adding analytics features that process the user’s historical weight entries. Because weight history is naturally an ordered collection of data points, it provided a good opportunity to demonstrate algorithmic thinking through time-based calculations and careful handling of edge cases. Specifically, I implemented date-window calculations for 7-day and 30-day rolling averages, trend direction (gain/loss/flat), per-entry weight change (Δ), rate of change (computed as lbs/day and displayed as lbs/week), and an estimated time to reach the user’s goal (ETA in days) when enough data is available (see Figures 1-4). I also added consistent rounding and “no data” behavior (represented by an em dash) so the app does not present misleading results when history is limited or a metric cannot be computed responsibly.</p>
-                <p>This enhancement shows I can improve an existing codebase without disrupting the original functionality. The original history view primarily displayed entries, but the new analytics makes the stored data more useful by summarizing progress in a way that is consistent and interpretable. These improvements also connect with my interest in AI and data-driven development because they focus on extracting meaningful information from data, making defensible assumptions, and ensuring calculations behave reliably.</p>
+                <p>To expand the application beyond basic data entry, I engineered an analytics layer that processes ordered time-series collections of historical weight data. This framework leverages date-window calculations to compute 7-day and 30-day rolling averages, tracking dynamic metrics such as trend direction, per-entry variance (Δ), and rates of change displayed as weekly velocity. When sufficient data thresholds are achieved, the algorithm predicts a projected date window to estimate the user's targeted goal arrival (ETA in days).</p>
+                <p>A primary challenge of this implementation was maintaining system integrity by integrating strict edge-case defenses. I implemented explicit data-validation rules and "no data" fallback constraints (represented visually by an em dash) to prevent the algorithm from producing misleading calculations when historical data coverage is restricted. This optimization balances data utility with algorithmic reliability, transforming raw data structures into highly interpretable user summaries without degrading local mobile processing performance.</p>
+                <p>These enhancements reflect a strong alignment with data-driven software development by demonstrating how to extract meaningful insights from raw datasets. By establishing clear computational assumptions and defensive filtering boundaries, the system ensures that mathematical processing remain stable, secure, and defensible across varying user entry volumes.</p>
             </div>
 
             <h3>Core Code Implementation: Algorithmic Logic & Edge-Case Defense</h3>
-            <p>To demonstrate advanced algorithmic thinking, I designed defensive logic checks into the application data analytics layer. This snippet showcases loop systems that actively look for distinct calendar days and filter data boundaries. This ensures that rate-of-change and progress trends are calculated using valid, consistent date milestones.</p>
+            <p>This snippet displays the foundational loop logic and boundary evaluations used to parse data collections. By isolating chronological entries and verifying distinct calendar days, the processing algorithm ensures that all calculations are derived from valid, consistent milestones.</p>
 
             <!-- ENHANCEMENT SOURCE -->
             <div class="btn-container">
@@ -308,13 +310,14 @@
             
             <h3>Narrative</h3>
             <div class="narrative-box">
-                <!-- NARRATIVE -->
-                <p>For the database enhancement, I focused on both security and performance. I refactored my DatabaseHelper class to use parameterized queries throughout (Figure 1), eliminating the risk of SQL injection attacks and making the codebase more maintainable. I added strategic indexes on frequently queried columns (Figure 2) to optimize query performance for analytics calculations and login validation. I also implemented CHECK constraints at the database level (Figure 3) to enforce data integrity rules (valid weights, reasonable goals, proper date ordering), ensuring invalid data cannot enter the database regardless of application logic. These enhancements take the database design beyond simply storing data by actively protecting against both security threats and data corruption, while supporting efficient querying for features like analytics.</p>
-                <p>This combination of enhancements shows I can improve an existing codebase across multiple layers (application logic, data structures, and database design) without disrupting original functionality. These improvements connect with my interest in building systems that are secure, efficient, and defensible because they focus on extracting meaningful information from data, making careful assumptions, and ensuring calculations and queries behave reliably.</p>
+                <p><em><strong>Project Baseline:</strong> This enhancement modifies my weight tracking mobile application, Weight Tracker, originally developed in Java using Android Studio in December 2025. Built as a foundational tool to log body weight values, track goal parameters, and review chronological history metrics, the application serves as the singular architecture for all capstone system optimizations.</em></p>
+                
+                <p>My work on the data tier focuses simultaneously on maximizing runtime performance and enforcing strict information security boundaries. I refactored the primary structural database class to mandate parameterized query bindings across all data transactions, completely neutralizing SQL injection vulnerabilities. To optimize calculation speeds for our newly engineered analytics layer, I deployed strategic relational indexes across highly targeted history columns. Furthermore, I engineered hard backend CHECK constraints directly into the SQLite tables to enforce data integrity limits on user inputs. This design layer actively blocks corrupted parameters before they can touch local device files, regardless of application-layer behaviors.</p>
+                <p>Upgrading the structural data layer demonstrates an ability to implement modern, multi-layered data protection frameworks. Shifting data validation checks from isolated UI workflows directly into the database engine creates a highly resilient system by design. These structural improvements safeguard user privacy, protect local memory resources from leak degradation, and ensure that the backend system remains stable and defensible across varying transaction volumes.</p>
             </div>
 
             <h3>Core Code Implementation: Secure Parameterized Queries</h3>
-            <p>To demonstrate a mature data security mindset, I refactored the data tier to completely prevent SQL injection exploits. These centralized query helpers isolate data access using Android's native structured query engine, enforcing type-safe parameterized arguments while safely managing database cursor streams to prevent memory leaks.</p>
+            <p>This implementation displays the secure parameterized data helper wrapper models. By routing transactions through Android's structured query engine, data parameters are forced into type-safe argument fields, while Java try-with-resources statement streams ensure that cursor streams close automatically to preserve system memory.</p>
 
             <!-- ENHANCEMENT SOURCE -->
             <div class="btn-container">
