@@ -56,10 +56,18 @@
                 .image-card { min-width: 100%; padding: 12px; }
             }
     
-            /* Specifically fixes layout heights when rotating into landscape mode */
+            /* Specifically fixes layout spacing and text sizes when rotating into landscape mode */
             @media (max-width: 930px) and (orientation: landscape) {
-                nav { position: static; padding: 6px; } /* Unpins menu so it doesn't block text */
-                header { padding: 20px 10px; }
+                nav { position: static; padding: 6px; } 
+                header { padding: 15px 10px; }
+                header h1 { font-size: 1.5em; }
+                
+                /* Optimizes font size and line height for short, wide screens */
+                body { font-size: 14px; line-height: 1.4; }
+                h2 { font-size: 1.4em; margin-bottom: 8px; }
+                h3 { font-size: 1.1em; margin-top: 15px; }
+                .narrative-box { padding: 15px; margin-bottom: 15px; font-size: 14px; }
+                section { padding: 15px; margin-bottom: 15px; }
             }
         </style>
 </head>
