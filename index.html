@@ -57,7 +57,7 @@
             <div class="narrative-box" style="border-left-color: #28a745; background-color: #fafdfb;">
                 
                 <h3>Introduction & Career Alignment</h3>
-                <p><strong>Hello, I am Aleks.</strong> Welcome to my professional computer science ePortfolio. As a graduate of the SNHU Computer Science program, my career goal is to develop software systems that streamline workflows in ethical, human-centered ways. I am deeply interested in building tools that augment human work, catch systemic errors, and improve code quality while keeping users in control of critical decisions. This portfolio showcases my ability to take a functional mobile application and systematically refactor it to meet modern enterprise standards for architecture, algorithmic defense, and database security.</p>
+                <p><strong>Hello, I'm Aleks.</strong> Welcome to my professional computer science ePortfolio. As a graduate of the SNHU Computer Science program, my career goal is to develop software systems that streamline workflows in ethical, human-centered ways. I am deeply interested in building tools that augment human work, catch systemic errors, and improve code quality while keeping users in control of critical decisions. This portfolio showcases my ability to take a functional mobile application and systematically refactor it to meet modern enterprise standards for architecture, algorithmic defense, and database security.</p>
             
                 <h3>The Refactoring Process & Project Management</h3>
                 <p>My capstone focus centers on my mobile application, Weight Tracker, originally designed in Java using Android Studio in December 2025. Revisiting this codebase provided a valuable lesson in software lifecycle management. I learned the critical importance of making disciplined, incremental improvements to an existing application rather than trying to overhaul too many components simultaneously. Approaching a legacy codebase with fresh eyes allowed me to be critically objective about my past work, helping me identify core opportunities to optimize user experience and code maintainability without disrupting foundational features.</p>
@@ -108,9 +108,9 @@
             </div>
 
             <!-- COMPARISON BUTTONS LINKING TO YOUR CODE REPOS -->
-            <div style="margin: 25px 0; text-align: center;">
-                <a href="https://github.com" target="_blank" style="background:#6e5494; color:white; padding:12px 20px; text-decoration:none; border-radius:4px; display:inline-block; margin-right:10px; font-weight:bold; font-size:14px;">Browse Original 2025 Repository Archive</a>
-                <a href="https://github.com" target="_blank" style="background:#28a745; color:white; padding:12px 20px; text-decoration:none; border-radius:4px; display:inline-block; font-weight:bold; font-size:14px;">Browse Enhanced Capstone Repository</a>
+            <div class="btn-container">
+                <a href="https://github.com/Aleks-III/CS-360-Mobile-Architecture-and-Programming" target="_blank" class="btn-old">Browse Original 2025 Repository Archive</a>
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone" target="_blank" class="btn-new">Browse Enhanced Capstone Repository</a>
             </div>
         </section>
 
@@ -125,13 +125,14 @@
                 <p>Implementing the software engineering enhancements improved the application by extracting repeated logic into shared helper classes, which made the code cleaner, easier to maintain, and more consistent across screens. Specifically, I created reusable navigation and SMS toggle helpers so the Daily, Goal, and History screens could share the same behavior without duplicating code. These changes demonstrate growth in my software development practices because they reflect a more maintainable and scalable design approach.</p>
                 <p>This was also a good opportunity to show I can improve an existing codebase without disrupting the original functionality. For example, navigation and toggle logic were originally limited to specific screens, but I refactored that behavior into helper classes and made it accessible from all relevant screens through a bottom navigation bar. This made the app more convenient for the user while also reducing duplication and making the code easier to understand. It required careful attention to shared state, such as the user ID and SMS preferences. In addition, the SMS notification flow now provides better communication when a goal is reached by prompting the user to decide whether they would like to set a new goal right away.</p>
             </div>
-            <div class="btn-container">
-                <a href="https://github.com" target="_blank" class="btn-old">View Original App Source (ZIP)</a>
-                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/NavigationHelper.java" target="_blank" class="btn-new">View NavigationHelper.java Source</a>
-            </div>
-
+            
             <h3>Core Code Implementation: Architectural Extraction</h3>
             <p>To demonstrate industry-standard software engineering practices, I refactored the application's structural layer. By moving the navigation logic into a centralized utility class, I eliminated duplicate code and ensured a uniform user experience across all primary tabs.</p>
+
+            <!-- ENHANCEMENT SOURCE -->
+            <div class="btn-container">
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/NavigationHelper.java" target="_blank" class="btn-new">View NavigationHelper.java Source</a>
+            </div>
             
             <pre><code>
             /**
@@ -191,11 +192,6 @@
                     });
                 }
             }</code></pre>
-            <div class="btn-container">
-                <a href="https://github.com" target="_blank" class="btn-old">View Original App Source (ZIP)</a>
-                <a href="https://github.com" target="_blank" class="btn-new">View NavigationHelper.java Source</a>
-            </div>
-        </section>
 
         <!-- ENHANCEMENT 2: ALGORITHMS AND DATA STRUCTURES -->
         <section id="enhancement2">
@@ -211,6 +207,11 @@
 
             <h3>Core Code Implementation: Algorithmic Logic & Edge-Case Defense</h3>
             <p>To demonstrate advanced algorithmic thinking, I designed defensive logic checks into the application data analytics layer. This snippet showcases loop systems that actively look for distinct calendar days and filter data boundaries. This ensures that rate-of-change and progress trends are calculated using valid, consistent date milestones.</p>
+
+            <!-- ENHANCEMENT SOURCE -->
+            <div class="btn-container">
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/WeightAnalytics.java" target="_blank" class="btn-new">View Enhanced WeightAnalytics.java</a>
+            </div>
             
             <pre><code>
                 // =====================================================
@@ -314,6 +315,11 @@
 
             <h3>Core Code Implementation: Secure Parameterized Queries</h3>
             <p>To demonstrate a mature data security mindset, I refactored the data tier to completely prevent SQL injection exploits. These centralized query helpers isolate data access using Android's native structured query engine, enforcing type-safe parameterized arguments while safely managing database cursor streams to prevent memory leaks.</p>
+
+            <!-- ENHANCEMENT SOURCE -->
+            <div class="btn-container">
+                <a href="https://github.com/Aleks-III/CS-499-Computer-Science-Capstone/blob/main/app/src/main/java/com/zybooks/weight_tracker/DatabaseHelper.java" target="_blank" class="btn-new">View Enhanced DatabaseHelper.java</a>
+            </div>
             
             <pre><code>
                 // =====================================================
