@@ -1,9 +1,9 @@
 ## GitHub Pages ePortfolio: [Aleks-III.github.io](https://aleks-iii.github.io)
 
-To view the original functional state of my *Weight Tracker* application, please visit my repository: 
+To view the original functional state of my mobile application, *Weight Tracker*, please visit my CS-360 repository: 
 <br>
 [CS-360-Mobile-Architecture-and-Programming](https://github.com/Aleks-III/CS-360-Mobile-Architecture-and-Programming)
 
-To view the enhanced, secure, and refactored capstone version of my *Weight Tracker* application, please visit my repository: 
+To view the enhanced, secure, and refactored capstone version of *Weight Tracker*, please visit my CS-499 repository: 
 <br>
 [CS-499-Computer-Science-Capstone](https://github.com/Aleks-III/CS-499-Computer-Science-Capstone)
