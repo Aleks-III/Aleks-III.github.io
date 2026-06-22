@@ -271,90 +271,91 @@ public final class NavigationHelper {
             </div>
             
             <pre><code>
-                // =====================================================
-                // Trend & rate-of-change
-                // =====================================================
-            
-                private static TrendType trendType(Double lbsPerDay) {
-                    if (lbsPerDay == null) return TrendType.INSUFFICIENT;
-                    if (Math.abs(lbsPerDay) &lt; FLAT_EPSILON_LBS_PER_DAY) return TrendType.FLAT;
-                    return lbsPerDay &lt; 0 ? TrendType.LOSS : TrendType.GAIN;
-                }
-            
-                private static final class RateInfo {
-                    final double lbsPerDay;
-            
-                    RateInfo(double lbsPerDay) {
-                        this.lbsPerDay = lbsPerDay;
-                    }
-                }
-            
-                /**
-                 * Computes slope using the most recent entry and the most recent earlier distinct day.
-                 */
-                private static RateInfo rateOfChange(List&lt;DatedWeight&gt; sortedByDateAsc) {
-                    if (sortedByDateAsc.size() &lt; 2) return null;
-            
-                    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
-            
-                    // Find the most recent entry that occurred on an earlier day than the last entry.
-                    DatedWeight prevDistinctDay = null;
-                    for (int i = sortedByDateAsc.size() - 2; i &gt;= 0; i--) {
-                        DatedWeight candidate = sortedByDateAsc.get(i);
-                        if (candidate.epochDay &lt; last.epochDay) {
-                            prevDistinctDay = candidate;
-                            break;
-                        }
-                    }
-            
-                    if (prevDistinctDay == null) {
-                        // All entries are on the same day -&gt; can't compute lbs/day
-                        return null;
-                    }
-            
-                    long days = last.epochDay - prevDistinctDay.epochDay;
-                    double delta = last.weight - prevDistinctDay.weight;
-            
-                    return new RateInfo(delta / (double) days);
-                }
-            
-                /** Computes lbs/day slope using entries within the last 7 days (by date window). */
-                private static RateInfo rateOfChangeInLast7Days(List&lt;DatedWeight&gt; sortedByDateAsc) {
-                    final int daysWindow = 7;
-            
-                    if (sortedByDateAsc.size() &lt; 2) return null;
-            
-                    long lastDay = sortedByDateAsc.get(sortedByDateAsc.size() - 1).epochDay;
-                    long cutoff = lastDay - (daysWindow - 1);
-            
-                    // Find first entry within the window
-                    int startIdx = -1;
-                    for (int i = 0; i &lt; sortedByDateAsc.size(); i++) {
-                        if (sortedByDateAsc.get(i).epochDay &gt;= cutoff) {
-                            startIdx = i;
-                            break;
-                        }
-                    }
-                    if (startIdx == -1) return null;
-            
-                    // Use the latest entry as the end, and find an earlier distinct day within window
-                    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
-            
-                    DatedWeight firstDistinct = null;
-                    for (int i = startIdx; i &lt; sortedByDateAsc.size(); i++) {
-                        DatedWeight candidate = sortedByDateAsc.get(i);
-                        if (candidate.epochDay &lt; last.epochDay) {
-                            firstDistinct = candidate;
-                            break;
-                        }
-                    }
-                    if (firstDistinct == null) return null;
-            
-                    long days = last.epochDay - firstDistinct.epochDay;
-                    if (days &lt;= 0) return null;
-            
-                    double delta = last.weight - firstDistinct.weight;
-                    return new RateInfo(delta / (double) days);
+// =====================================================
+// Trend & rate-of-change
+// =====================================================
+
+private static TrendType trendType(Double lbsPerDay) {
+    if (lbsPerDay == null) return TrendType.INSUFFICIENT;
+    if (Math.abs(lbsPerDay) &lt; FLAT_EPSILON_LBS_PER_DAY) return TrendType.FLAT;
+    return lbsPerDay &lt; 0 ? TrendType.LOSS : TrendType.GAIN;
+}
+
+private static final class RateInfo {
+    final double lbsPerDay;
+
+    RateInfo(double lbsPerDay) {
+        this.lbsPerDay = lbsPerDay;
+    }
+}
+
+/**
+ * Computes slope using the most recent entry and the most recent earlier distinct day.
+ */
+private static RateInfo rateOfChange(List&lt;DatedWeight&gt; sortedByDateAsc) {
+    if (sortedByDateAsc.size() &lt; 2) return null;
+
+    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
+
+    // Find the most recent entry that occurred on an earlier day than the last entry.
+    DatedWeight prevDistinctDay = null;
+    for (int i = sortedByDateAsc.size() - 2; i &gt;= 0; i--) {
+        DatedWeight candidate = sortedByDateAsc.get(i);
+        if (candidate.epochDay &lt; last.epochDay) {
+            prevDistinctDay = candidate;
+            break;
+        }
+    }
+
+    if (prevDistinctDay == null) {
+        // All entries are on the same day -&gt; can't compute lbs/day
+        return null;
+    }
+
+    long days = last.epochDay - prevDistinctDay.epochDay;
+    double delta = last.weight - prevDistinctDay.weight;
+
+    return new RateInfo(delta / (double) days);
+}
+
+/** Computes lbs/day slope using entries within the last 7 days (by date window). */
+private static RateInfo rateOfChangeInLast7Days(List&lt;DatedWeight&gt; sortedByDateAsc) {
+    final int daysWindow = 7;
+
+    if (sortedByDateAsc.size() &lt; 2) return null;
+
+    long lastDay = sortedByDateAsc.get(sortedByDateAsc.size() - 1).epochDay;
+    long cutoff = lastDay - (daysWindow - 1);
+
+    // Find first entry within the window
+    int startIdx = -1;
+    for (int i = 0; i &lt; sortedByDateAsc.size(); i++) {
+        if (sortedByDateAsc.get(i).epochDay &gt;= cutoff) {
+            startIdx = i;
+            break;
+        }
+    }
+    if (startIdx == -1) return null;
+
+    // Use the latest entry as the end, and find an earlier distinct day within window
+    DatedWeight last = sortedByDateAsc.get(sortedByDateAsc.size() - 1);
+
+    DatedWeight firstDistinct = null;
+    for (int i = startIdx; i &lt; sortedByDateAsc.size(); i++) {
+        DatedWeight candidate = sortedByDateAsc.get(i);
+        if (candidate.epochDay &lt; last.epochDay) {
+            firstDistinct = candidate;
+            break;
+        }
+    }
+    if (firstDistinct == null) return null;
+
+    long days = last.epochDay - firstDistinct.epochDay;
+    if (days &lt;= 0) return null;
+
+    double delta = last.weight - firstDistinct.weight;
+    return new RateInfo(delta / (double) days);
+}
                 }</code></pre>
         </section>
 
@@ -380,95 +381,96 @@ public final class NavigationHelper {
             </div>
             
             <pre><code>
-                // =====================================================
-                // Helper methods for consistent query execution
-                // =====================================================
-            
-                /**
-                 * Executes a SELECT query and returns a single Long value.
-                 * Closes the cursor automatically.
-                 *
-                 * @param table      the table name
-                 * @param column     the column to select
-                 * @param whereClause the WHERE clause (without "WHERE")
-                 * @param whereArgs  the query arguments
-                 * @return the value, or -1 if not found
-                 */
-                private long queryForLong(String table, String column, String whereClause, String[] whereArgs) {
-                    SQLiteDatabase db = this.getReadableDatabase();
-            
-                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
-                            null, null, null)) {
-                        if (cursor.moveToFirst()) {
-                            return cursor.getLong(0);
-                        }
-                    }
-            
-                    return -1;
-                }
-            
-                /**
-                 * Executes a SELECT query and returns a single Double value.
-                 * Closes the cursor automatically.
-                 *
-                 * @param table      the table name
-                 * @param column     the column to select
-                 * @param whereClause the WHERE clause (without "WHERE")
-                 * @param whereArgs  the query arguments
-                 * @return the value, or null if not found
-                 */
-                private Double queryForDouble(String table, String column, String whereClause, String[] whereArgs) {
-                    SQLiteDatabase db = this.getReadableDatabase();
-            
-                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
-                            null, null, null)) {
-                        if (cursor.moveToFirst()) {
-                            return cursor.getDouble(0);
-                        }
-                    }
-            
-                    return null;
-                }
-            
-                /**
-                 * Executes a SELECT query and returns a single String value.
-                 * Closes the cursor automatically.
-                 *
-                 * @param table      the table name
-                 * @param column     the column to select
-                 * @param whereClause the WHERE clause (without "WHERE")
-                 * @param whereArgs  the query arguments
-                 * @return the value, or null if not found
-                 */
-                private String queryForString(String table, String column, String whereClause, String[] whereArgs) {
-                    SQLiteDatabase db = this.getReadableDatabase();
-            
-                    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
-                            null, null, null)) {
-                        if (cursor.moveToFirst()) {
-                            return cursor.getString(0);
-                        }
-                    }
-            
-                    return null;
-                }
-            
-                /**
-                 * Executes a SELECT query and returns whether a record exists.
-                 * Closes the cursor automatically.
-                 *
-                 * @param table      the table name
-                 * @param whereClause the WHERE clause (without "WHERE")
-                 * @param whereArgs  the query arguments
-                 * @return true if at least one record matches, false otherwise
-                 */
-                private boolean recordExists(String table, String whereClause, String[] whereArgs) {
-                    SQLiteDatabase db = this.getReadableDatabase();
-            
-                    try (Cursor cursor = db.query(table, new String[]{"1"}, whereClause, whereArgs,
-                            null, null, null)) {
-                        return cursor.getCount() > 0;
-                    }
+// =====================================================
+// Helper methods for consistent query execution
+// =====================================================
+
+/**
+ * Executes a SELECT query and returns a single Long value.
+ * Closes the cursor automatically.
+ *
+ * @param table      the table name
+ * @param column     the column to select
+ * @param whereClause the WHERE clause (without "WHERE")
+ * @param whereArgs  the query arguments
+ * @return the value, or -1 if not found
+ */
+private long queryForLong(String table, String column, String whereClause, String[] whereArgs) {
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+            null, null, null)) {
+        if (cursor.moveToFirst()) {
+            return cursor.getLong(0);
+        }
+    }
+
+    return -1;
+}
+
+/**
+ * Executes a SELECT query and returns a single Double value.
+ * Closes the cursor automatically.
+ *
+ * @param table      the table name
+ * @param column     the column to select
+ * @param whereClause the WHERE clause (without "WHERE")
+ * @param whereArgs  the query arguments
+ * @return the value, or null if not found
+ */
+private Double queryForDouble(String table, String column, String whereClause, String[] whereArgs) {
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+            null, null, null)) {
+        if (cursor.moveToFirst()) {
+            return cursor.getDouble(0);
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Executes a SELECT query and returns a single String value.
+ * Closes the cursor automatically.
+ *
+ * @param table      the table name
+ * @param column     the column to select
+ * @param whereClause the WHERE clause (without "WHERE")
+ * @param whereArgs  the query arguments
+ * @return the value, or null if not found
+ */
+private String queryForString(String table, String column, String whereClause, String[] whereArgs) {
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    try (Cursor cursor = db.query(table, new String[]{column}, whereClause, whereArgs,
+            null, null, null)) {
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Executes a SELECT query and returns whether a record exists.
+ * Closes the cursor automatically.
+ *
+ * @param table      the table name
+ * @param whereClause the WHERE clause (without "WHERE")
+ * @param whereArgs  the query arguments
+ * @return true if at least one record matches, false otherwise
+ */
+private boolean recordExists(String table, String whereClause, String[] whereArgs) {
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    try (Cursor cursor = db.query(table, new String[]{"1"}, whereClause, whereArgs,
+            null, null, null)) {
+        return cursor.getCount() > 0;
+    }
+}
                 }</code></pre>
         </section>
     </div>
